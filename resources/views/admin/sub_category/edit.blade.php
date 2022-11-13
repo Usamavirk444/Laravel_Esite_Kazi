@@ -12,25 +12,42 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h4 class="box-title">Edit Category</h4>
-                    <a href="{{ route('all.brands') }}" class="btn btn-success btn-md float-right">Go Back</a>
+                    <a href="{{ route('all.subcategory') }}" class="btn btn-success btn-md float-right">Go Back</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
                         <div class="col">
-                            <form method="POST" id="addBrand" enctype="multipart/form-data"
-                                action="{{ route('category.update') }}">
+                            <form method="POST" id="addBrand"action="{{ route('subcategory.update') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
+                                            <h5>Select Category<span class="text-danger">*</span></h5>
+                                            <div class="controls">
+                                                <select name="category_id" class="form-control" id="">
+                                                    <option value="" disabled>Select Option</option>
+                                                    @foreach ($category as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->id == $subcategory->category_id ? 'selected' : '' }}>
+                                                            {{ $item->category_name_eng }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('category_id')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <h5>Category Name English <span class="text-danger">*</span></h5>
                                             <div class="controls">
                                                 <input id="current_password" type="hidden" name="id"
-                                                    class="form-control" value="{{ $category->id }}">
-                                                <input id="current_password" type="text" name="category_name_eng"
-                                                    class="form-control" value="{{ $category->category_name_eng }}">
-                                                @error('nameEng')
+                                                    class="form-control" value="{{ $subcategory->id }}">
+                                                <input type="text" name="subcategory_name_eng" class="form-control"
+                                                    value="{{ $subcategory->subcategory_name_eng }}">
+                                                @error('category_name_eng')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                                 <div class="help-block"></div>
@@ -39,20 +56,9 @@
                                         <div class="form-group">
                                             <h5>Category Name Urdu <span class="text-danger">*</span></h5>
                                             <div class="controls">
-                                                <input id="password" type="text" name="category_name_urdu" class="form-control"
-                                                    value="{{ $category->category_name_urdu }}">
-                                                @error('nameUrdu')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                                <div class="help-block"></div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <h5>Category Image <span class="text-danger">*</span></h5>
-                                            <div class="controls">
-                                                <input id="password_confirmation" type="text" value="{{ $category->category_img }}" name="category_img"
-                                                    class="form-control">
-                                                @error('img')
+                                                <input id="password" type="text" name="subcategory_name_urdu"
+                                                    class="form-control" value="{{ $subcategory->subcategory_name_urdu }}">
+                                                @error('category_name_urdu')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                                 <div class="help-block"></div>
@@ -61,7 +67,8 @@
                                     </div>
                                 </div>
                                 <div class="text-xs-right">
-                                    <button type="submit" class="btn btn-rounded btn-block btn-info">Update Category</button>
+                                    <button type="submit" class="btn btn-rounded btn-block btn-info">Update
+                                        Category</button>
                                 </div>
                             </form>
 

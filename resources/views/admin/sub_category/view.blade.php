@@ -7,8 +7,8 @@
                 <div class="col-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Category List</h3>
-                            <a href="{{route('category.add')}}" class="btn btn-success btn-md float-right">Add New Category</a>
+                            <h3 class="box-title">Sub Category List</h3>
+                            <a href="{{route('subcategory.add')}}" class="btn btn-success btn-md float-right">Add New Sub Category</a>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -16,21 +16,21 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Image</th>
+                                            <th>Category</th>
                                             <th>Category Eng</th>
                                             <th>Category Urdu</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($category as $item )
+                                        @foreach ($subcategory as $key =>$item )
                                         <tr>
-                                            <td><span><i class="{{$item->category_img}}"></i></span></td>
-                                            <td>{{$item->category_name_eng}}</td>
-                                            <td>{{$item->category_name_urdu}}</td>
+                                            <td>{{$item['category']['category_name_eng']}}</td>
+                                            <td>{{$item->subcategory_name_eng}}</td>
+                                            <td>{{$item->subcategory_name_urdu}}</td>
                                             <td>
-                                                <a href="{{route('category.edit', $item->id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="{{route('category.delete',$item->id)}}" id="delete" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a href="{{route('subcategory.edit', $item->id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <a href="{{route('subcategory.delete',$item->id)}}" id="delete" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                                             </td>
                                         </tr>

@@ -16,4 +16,7 @@ class SubCategory extends Model
         'subcategory_slug_urdu',
         'subcategory_img'
     ];
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id','id');
+    }
 }

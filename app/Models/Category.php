@@ -15,4 +15,8 @@ class Category extends Model
         'category_slug_urdu',
         'category_img'
     ];
+    // public function subcategory(){
+    //     return $this->belongsTo(SubCategory::class,'category_id','id');
+
+    // }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -10,44 +11,47 @@ class SubCategoryController extends Controller
 {
     public function SubCategoryView()
     {
-        $category = SubCategory::latest()->get();
-        return view('admin.category.view', compact('category'));
+        $subcategory = SubCategory::latest()->get();
+        $category = Category::latest()->get();
+        return view('admin.sub_category.view', compact('subcategory','category'));
     }
 
     public function SubCategoryAdd()
     {
-        return view('admin.category.add');
+        $category = Category::all();
+        return view('admin.sub_category.add',compact('category'));
     }
 
     public function SubCategoryStore(Request $request)
     {
         $request->validate([
-            'category_name_eng'=> 'required',
-            'category_name_urdu'=> 'required',
-            'category_img'=> 'required',
+            'category_id'=> 'required',
+            'subcategory_name_eng'=> 'required',
+            'subcategory_name_urdu'=> 'required',
         ],[
-           'category_name_eng.required'  => 'English Name field is required',
-           'category_name_urdu.required'  => 'Urdu Name field is required',
-           'category_img.required'  => 'Image field is required',
+           'category_id.required'  => 'Select Any field',
+           'subcategory_name_eng.required'  => 'English Name field is required',
+           'subcategory_name_urdu.required'  => 'Urdu Name field is required',
+
         ]);
 
 
         SubCategory::insert([
                 'category_id'=> $request->category_id,
-                'category_name_urdu'=> $request->category_name_urdu,
-                'category_slug_eng'=> strtolower(str_replace(' ', '-',$request->category_name_eng)) ,
-                'category_slug_urdu'=> strtolower(str_replace(' ', '-',$request->category_name_urdu)),
-                'category_img'=> $request->category_img,
+                'subcategory_name_eng'=> $request->subcategory_name_eng,
+                'subcategory_name_urdu'=> $request->subcategory_name_urdu,
+                'subcategory_slug_eng'=> strtolower(str_replace(' ', '-',$request->subcategory_name_eng)) ,
+                'subcategory_slug_urdu'=> strtolower(str_replace(' ', '-',$request->subcategory_name_urdu)),
             ]);
 
-            return redirect()->route('all.category');
+            return redirect()->route('all.subcategory');
 
     }
 
     public function SubCategoryEdit(Request $request, $id){
-
-        $category = SubCategory::find($id);
-        return view('admin.category.edit',compact('category'));
+        $category = Category::all();
+        $subcategory = SubCategory::find($id);
+        return view('admin.sub_category.edit',compact('subcategory','category'));
 
     }
     public function SubCategoryUpdate(Request $request){
@@ -56,23 +60,19 @@ class SubCategoryController extends Controller
         if(!empty($category)){
 
             SubCategory::find($request->id)->update([
-                    'category_name_eng'=> $request->category_name_eng,
-                    'category_name_urdu'=> $request->category_name_urdu,
-                    'category_slug_eng'=> strtolower(str_replace(' ', '-',$request->category_name_eng)) ,
-                    'category_slug_urdu'=> strtolower(str_replace(' ', '-',$request->category_name_urdu)),
-                    'category_img'=> $request->category_img,
-
+                    'subcategory_name_eng'=> $request->subcategory_name_eng,
+                    'subcategory_name_urdu'=> $request->subcategory_name_urdu,
+                    'subcategory_slug_eng'=> strtolower(str_replace(' ', '-',$request->subcategory_name_eng)) ,
+                    'subcategory_slug_urdu'=> strtolower(str_replace(' ', '-',$request->subcategory_name_urdu)),
                 ]);
-                return redirect()->route('all.category');
+                return redirect()->route('all.subcategory');
 
         }
-        return view('admin.category.edit',compact('category'));
+        return view('admin.subcategory.edit',compact('category'));
 
     }
     public function SubCategoryDelete( $id){
 
-        $SubCategory_img = SubCategory::find($id)->category_img;
-        unlink($SubCategory_img);
         $SubCategory_del = SubCategory::find($id)->delete();
         return redirect()->back();
     }
