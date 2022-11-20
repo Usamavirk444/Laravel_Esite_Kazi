@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminProfile;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\admin\SubSubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ Route::prefix('brands')->group(function(){
 
 });
 
-// Admin Brands All routes
+// Admin Category All routes
 Route::prefix('category')->group(function(){
 
     Route::get('/view',[CategoryController::class, 'CategoryView'])->name('all.category');
@@ -48,7 +49,7 @@ Route::prefix('category')->group(function(){
 
 });
 
-// Admin Brands All routes
+// Admin Sub Category All routes
 Route::prefix('subcategory')->group(function(){
 
     Route::get('/view',[SubCategoryController::class, 'SubCategoryView'])->name('all.subcategory');
@@ -57,6 +58,20 @@ Route::prefix('subcategory')->group(function(){
     Route::get('/edit/{id}',[SubCategoryController::class, 'SubCategoryEdit'])->name('subcategory.edit');
     Route::post('/update',[SubCategoryController::class, 'SubCategoryUpdate'])->name('subcategory.update');
     Route::get('/delete/{id}',[SubCategoryController::class, 'SubCategoryDelete'])->name('subcategory.delete');
+
+});
+
+// Admin Sub Sub Category All routes
+Route::prefix('subsubcategory')->group(function(){
+
+    Route::get('/view',[SubSubCategoryController::class, 'SubSubCategoryView'])->name('all.subsubcategory');
+    Route::get('/add',[SubSubCategoryController::class, 'SubSubCategoryAdd'])->name('subsubcategory.add');
+    Route::post('/store',[SubSubCategoryController::class, 'SubSubCategoryStore'])->name('subsubcategory.store');
+    Route::get('/edit/{id}',[SubSubCategoryController::class, 'SubSubCategoryEdit'])->name('subsubcategory.edit');
+    Route::post('/update',[SubSubCategoryController::class, 'SubSubCategoryUpdate'])->name('subsubcategory.update');
+    Route::get('/delete/{id}',[SubSubCategoryController::class, 'SubSubCategoryDelete'])->name('subsubcategory.delete');
+    Route::get('/subcategory/ajax/{category_id}',[SubSubCategoryController::class, 'ajaxCall']);
+
 
 });
 
